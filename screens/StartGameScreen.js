@@ -1,7 +1,33 @@
-import { View, Text, TextInput, StyleSheet } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Alert } from 'react-native';
+import { useState } from 'react';
 import PrimaryButton from '../components/PrimaryButton';
+import Colors from '../util/color';
 
-export default function StartGameScreen() {
+export default function StartGameScreen({ onPickNumber }) {
+  const [enteredNumber, setEnteredNumber] = useState('');
+
+  const onChangeNumber = input => {
+    setEnteredNumber(input);
+  };
+
+  const resetInput = () => {
+    setEnteredNumber('');
+  };
+
+  const confirmInput = () => {
+    const chosenNumber = parseInt(enteredNumber);
+
+    if (isNaN(chosenNumber) || chosenNumber <= 0 || chosenNumber > 99) {
+      Alert.alert(
+        'Invalid Number',
+        'Number should be of type number between 0 and 99',
+        [{ text: 'Okay', style: 'destructive', onPress: resetInput }]
+      );
+      return;
+    }
+    onPickNumber(enteredNumber);
+  };
+
   return (
     <View style={styles.inputContainer}>
       <TextInput
@@ -10,13 +36,15 @@ export default function StartGameScreen() {
         keyboardType="number-pad"
         autoCorrect={false}
         autoCapitalize={false}
+        value={enteredNumber}
+        onChangeText={onChangeNumber}
       />
       <View style={styles.buttonsContainer}>
         <View style={styles.buttonContainer}>
-          <PrimaryButton>Start</PrimaryButton>
+          <PrimaryButton onPress={confirmInput}>Start</PrimaryButton>
         </View>
         <View style={styles.buttonContainer}>
-          <PrimaryButton>Reset</PrimaryButton>
+          <PrimaryButton onPress={resetInput}>Reset</PrimaryButton>
         </View>
       </View>
     </View>
@@ -30,7 +58,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 100,
     elevation: 8,
-    backgroundColor: '#3b021f',
+    backgroundColor: Colors.primary700,
     shadowColor: 'black',
     shadowOffset: {
       width: 0,
@@ -45,9 +73,9 @@ const styles = StyleSheet.create({
     width: 50,
     textAlign: 'center',
     fontSize: 32,
-    borderBottomColor: '#ddb52f',
+    borderBottomColor: Colors.accent500,
     borderBottomWidth: 2,
-    color: '#ddb52f',
+    color: Colors.accent500,
     marginVertical: 8,
     fontWeight: 'bold',
   },
