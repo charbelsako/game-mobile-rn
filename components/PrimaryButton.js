@@ -1,7 +1,7 @@
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import Colors from '../util/color';
 
-export default function PrimaryButtons({ children, onPress }) {
+export default function PrimaryButton({ children, onPress }) {
   return (
     <View style={styles.outerContainer}>
       <Pressable
