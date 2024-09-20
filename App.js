@@ -6,6 +6,8 @@ import GameScreen from './screens/GameScreen';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useState } from 'react';
 import Colors from './util/color';
+import { useFonts } from 'expo-font';
+import AppLoading from 'expo-app-loading';
 
 export default function App() {
   const [userNumber, setNumber] = useState(undefined);
@@ -13,6 +15,13 @@ export default function App() {
   const pickNumberHandler = n => {
     setNumber(n);
   };
+
+  const [fontsLoaded] = useFonts({
+    Primary: require('./assets/fonts/OpenSans-Regular.ttf'),
+    PrimaryBold: require('./assets/fonts/OpenSans-Bold.ttf'),
+  });
+
+  if (!fontsLoaded) return <AppLoading />;
 
   let screen = <StartGameScreen onPickNumber={pickNumberHandler} />;
 
@@ -32,19 +41,22 @@ export default function App() {
   }
 
   return (
-    <LinearGradient
-      colors={[Colors.primary800, Colors.accent500]}
-      style={styles.rootScreen}
-    >
-      <ImageBackground
-        source={require('./assets/background.png')}
-        resizeMode="cover"
+    <>
+      <StatusBar style="light" />
+      <LinearGradient
+        colors={[Colors.primary800, Colors.accent500]}
         style={styles.rootScreen}
-        imageStyle={styles.backgroundImage}
       >
-        <SafeAreaView style={styles.root}>{screen}</SafeAreaView>
-      </ImageBackground>
-    </LinearGradient>
+        <ImageBackground
+          source={require('./assets/background.png')}
+          resizeMode="cover"
+          style={styles.rootScreen}
+          imageStyle={styles.backgroundImage}
+        >
+          <SafeAreaView style={styles.root}>{screen}</SafeAreaView>
+        </ImageBackground>
+      </LinearGradient>
+    </>
   );
 }
 

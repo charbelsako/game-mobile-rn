@@ -4,6 +4,7 @@ import React from 'react';
 import Title from '../components/Title';
 import Number from '../components/Number';
 import PrimaryButton from '../components/PrimaryButton';
+import { Ionicons } from '@expo/vector-icons';
 
 let minBoundary = 1;
 let maxBoundary = 100;
@@ -62,10 +63,10 @@ export default function GameScreen({ userNumber, onGameOver }) {
         <Text>Higher or Lower?</Text>
         <View>
           <PrimaryButton onPress={nextGuess.bind(this, 'higher')}>
-            +
+            <Ionicons name="add" color="white" />
           </PrimaryButton>
           <PrimaryButton onPress={nextGuess.bind(this, 'lower')}>
-            -
+            <Ionicons name="remove" color="white" />
           </PrimaryButton>
         </View>
       </View>

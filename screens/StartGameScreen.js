@@ -97,6 +97,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   instructionText: {
+    fontFamily: 'Primary',
     color: Colors.primary500,
   },
 });
